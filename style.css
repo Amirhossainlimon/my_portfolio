@@ -1624,3 +1624,178 @@ SKILLS LOGO SPIN EFFECT
 .devicon-github-original{
     color:white !important;
 }
+
+
+/* =========================
+PREMIUM CUSTOM CURSOR
+========================= */
+
+
+body{
+    cursor:none;
+}
+
+
+
+/* Main Dot */
+
+.cursor-dot{
+
+    width:12px;
+    height:12px;
+
+    background:#00ff88;
+
+    border-radius:50%;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    transform:translate(-50%,-50%);
+
+    pointer-events:none;
+
+    z-index:99999;
+
+
+    box-shadow:
+    0 0 10px #00ff88,
+    0 0 25px #00ff88,
+    0 0 45px #00ff88;
+
+
+    animation:pulseCursor 1.5s infinite;
+
+}
+
+
+
+
+
+/* Outer Ring */
+
+.cursor-outline{
+
+
+    width:55px;
+    height:55px;
+
+
+    border-radius:50%;
+
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+
+    transform:translate(-50%,-50%);
+
+
+    pointer-events:none;
+
+
+    z-index:99998;
+
+
+    border:2px solid rgba(0,255,136,.7);
+
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,255,136,.12),
+    transparent 70%
+    );
+
+
+    backdrop-filter:blur(5px);
+
+
+
+    box-shadow:
+
+    0 0 20px rgba(0,255,136,.5),
+    inset 0 0 15px rgba(0,255,136,.3);
+
+
+
+    transition:
+    width .3s ease,
+    height .3s ease,
+    border .3s ease;
+
+
+
+}
+
+
+
+
+/* Glow Pulse */
+
+@keyframes pulseCursor{
+
+
+0%{
+
+transform:
+translate(-50%,-50%)
+scale(1);
+
+}
+
+
+50%{
+
+transform:
+translate(-50%,-50%)
+scale(1.4);
+
+}
+
+
+100%{
+
+transform:
+translate(-50%,-50%)
+scale(1);
+
+}
+
+
+}
+
+
+
+
+/* Hover Effect */
+
+.cursor-hover{
+
+
+width:80px;
+
+height:80px;
+
+border-color:#00d4ff;
+
+box-shadow:
+
+0 0 30px #00d4ff,
+inset 0 0 20px rgba(0,212,255,.5);
+
+
+}
+
+/* =========================
+PREMIUM CURSOR FIX
+========================= */
+
+.cursor-dot,
+.cursor-outline{
+    display:block;
+}

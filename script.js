@@ -204,3 +204,70 @@ navLinks.classList.remove("active");
 
 
 });
+
+
+
+
+// =========================
+// PREMIUM CURSOR
+// =========================
+
+
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorOutline = document.querySelector(".cursor-outline");
+
+
+window.addEventListener("mousemove", (e)=>{
+
+
+    cursorDot.style.left = e.clientX + "px";
+    cursorDot.style.top = e.clientY + "px";
+
+
+    cursorOutline.animate(
+        [
+            {
+                left: cursorOutline.style.left,
+                top: cursorOutline.style.top
+            },
+            {
+                left: e.clientX + "px",
+                top: e.clientY + "px"
+            }
+        ],
+        {
+            duration: 400,
+            fill:"forwards"
+        }
+    );
+
+
+});
+
+
+
+// Hover effect
+
+const hoverElements = document.querySelectorAll(
+"a, button, .skill-item, .project-card, .contact-box"
+);
+
+
+hoverElements.forEach((item)=>{
+
+
+item.addEventListener("mouseenter",()=>{
+
+cursorOutline.classList.add("cursor-hover");
+
+});
+
+
+item.addEventListener("mouseleave",()=>{
+
+cursorOutline.classList.remove("cursor-hover");
+
+});
+
+
+});
