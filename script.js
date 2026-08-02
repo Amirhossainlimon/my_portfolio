@@ -1,273 +1,113 @@
 // =========================
-// ONE TIME NAME TYPING
+// SCROLL REVEAL ANIMATION (Smooth Fade-up)
 // =========================
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15 
+};
 
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target); 
+        }
+    });
+}, observerOptions);
 
+const hiddenElements = document.querySelectorAll('.hidden');
+hiddenElements.forEach((el) => observer.observe(el));
+
+// =========================
+// ONE TIME NAME TYPING (Original)
+// =========================
 const nameText = "Hi, I'm Amir Hossain Limon";
-
 const nameElement = document.querySelector(".typing-name");
-
-
 let nameIndex = 0;
 
-
-
 function typeName(){
-
-
-if(nameIndex < nameText.length){
-
-
-nameElement.innerHTML += nameText.charAt(nameIndex);
-
-
-nameIndex++;
-
-
-setTimeout(typeName,100);
-
-
+    if(nameIndex < nameText.length){
+        nameElement.innerHTML += nameText.charAt(nameIndex);
+        nameIndex++;
+        setTimeout(typeName,100);
+    }
 }
-
-
-}
-
-
-
-
 window.addEventListener("load",()=>{
-
-
-typeName();
-
-
+    typeName();
 });
 
-
-
-
-
-
-
-
-
 // =========================
-// ROLE LOOP TYPING
+// ROLE LOOP TYPING (Original)
 // =========================
-
-
-const roleText = 
-"Flutter Developer | Cross-Platform Mobile App Development";
-
-
+const roleText = "Flutter Developer | Cross-Platform Mobile App Development";
 const roleElement = document.querySelector(".role-text");
-
-
-
 let roleIndex = 0;
-
 let deleting = false;
 
-
-
-
-
-
 function roleTyping(){
-
-
-
-if(!deleting){
-
-
-roleElement.innerHTML =
-roleText.substring(0,roleIndex);
-
-
-roleIndex++;
-
-
-
-if(roleIndex > roleText.length){
-
-
-deleting = true;
-
-
-setTimeout(roleTyping,1500);
-
-
-return;
-
-
+    if(!deleting){
+        roleElement.innerHTML = roleText.substring(0,roleIndex);
+        roleIndex++;
+        if(roleIndex > roleText.length){
+            deleting = true;
+            setTimeout(roleTyping,1500);
+            return;
+        }
+    }
+    else{
+        roleElement.innerHTML = roleText.substring(0,roleIndex);
+        roleIndex--;
+        if(roleIndex < 0){
+            deleting=false;
+            roleIndex=0;
+        }
+    }
+    let speed = deleting ? 40 : 80;
+    setTimeout(roleTyping,speed);
 }
-
-
-
-}
-
-else{
-
-
-roleElement.innerHTML =
-roleText.substring(0,roleIndex);
-
-
-roleIndex--;
-
-
-
-if(roleIndex < 0){
-
-
-deleting=false;
-
-
-roleIndex=0;
-
-
-}
-
-
-
-}
-
-
-
-let speed = deleting ? 40 : 80;
-
-
-
-setTimeout(roleTyping,speed);
-
-
-
-}
-
-
-
-
 window.addEventListener("load",()=>{
-
-
-setTimeout(roleTyping,2000);
-
-
+    setTimeout(roleTyping,2000);
 });
 
-
-
-
-
-
-
-
-
 // =========================
-// MOBILE NAVBAR
+// MOBILE NAVBAR (Original)
 // =========================
-
-
 const menu = document.querySelector(".menu");
-
 const navLinks = document.querySelector(".nav-links");
 
-
-
 menu.addEventListener("click",()=>{
-
-
-navLinks.classList.toggle("active");
-
+    navLinks.classList.toggle("active");
 });
-
-
-
-
-
-
-
-// Close menu after click
-
-
-document.querySelectorAll(".nav-links a")
-.forEach(link=>{
-
-
-link.addEventListener("click",()=>{
-
-
-navLinks.classList.remove("active");
-
-
+document.querySelectorAll(".nav-links a").forEach(link=>{
+    link.addEventListener("click",()=>{
+        navLinks.classList.remove("active");
+    });
 });
-
-
-});
-
-
-
 
 // =========================
-// PREMIUM CURSOR
+// PREMIUM CURSOR (Original Logic)
 // =========================
+if (window.matchMedia("(pointer: fine)").matches) {
+    const cursorDot = document.querySelector(".cursor-dot");
+    const cursorOutline = document.querySelector(".cursor-outline");
 
+    window.addEventListener("mousemove", (e)=>{
+        cursorDot.style.left = e.clientX + "px";
+        cursorDot.style.top = e.clientY + "px";
 
-const cursorDot = document.querySelector(".cursor-dot");
-const cursorOutline = document.querySelector(".cursor-outline");
+        cursorOutline.animate(
+            [
+                { left: cursorOutline.style.left, top: cursorOutline.style.top },
+                { left: e.clientX + "px", top: e.clientY + "px" }
+            ],
+            { duration: 400, fill:"forwards" }
+        );
+    });
 
-
-window.addEventListener("mousemove", (e)=>{
-
-
-    cursorDot.style.left = e.clientX + "px";
-    cursorDot.style.top = e.clientY + "px";
-
-
-    cursorOutline.animate(
-        [
-            {
-                left: cursorOutline.style.left,
-                top: cursorOutline.style.top
-            },
-            {
-                left: e.clientX + "px",
-                top: e.clientY + "px"
-            }
-        ],
-        {
-            duration: 400,
-            fill:"forwards"
-        }
-    );
-
-
-});
-
-
-
-// Hover effect
-
-const hoverElements = document.querySelectorAll(
-"a, button, .skill-item, .project-card, .contact-box"
-);
-
-
-hoverElements.forEach((item)=>{
-
-
-item.addEventListener("mouseenter",()=>{
-
-cursorOutline.classList.add("cursor-hover");
-
-});
-
-
-item.addEventListener("mouseleave",()=>{
-
-cursorOutline.classList.remove("cursor-hover");
-
-});
-
-
-});
+    const hoverElements = document.querySelectorAll("a, button, .skill-item, .project-card, .contact-box, .experience-box, .certificate-card, .soft-skill-item");
+    hoverElements.forEach((item)=>{
+        item.addEventListener("mouseenter",()=>{ cursorOutline.classList.add("cursor-hover"); });
+        item.addEventListener("mouseleave",()=>{ cursorOutline.classList.remove("cursor-hover"); });
+    });
+}
