@@ -111,3 +111,45 @@ if (window.matchMedia("(pointer: fine)").matches) {
         item.addEventListener("mouseleave",()=>{ cursorOutline.classList.remove("cursor-hover"); });
     });
 }
+
+
+async function getGithubContributions() {
+
+    const username = "Amirhossainlimon";
+
+    try {
+
+        const response = await fetch(
+            `https://github-contributions-api.jogruber.de/v4/${username}`
+        );
+
+        const data = await response.json();
+
+
+        let total = 0;
+
+
+        data.contributions.forEach(day => {
+
+            total += day.count;
+
+        });
+
+
+        document.getElementById("contribution-count").innerText =
+        `${total} Contributions in the last year`;
+
+
+    } catch(error) {
+
+        console.log(error);
+
+        document.getElementById("contribution-count").innerText =
+        "GitHub Contributions";
+
+    }
+
+}
+
+
+getGithubContributions();
