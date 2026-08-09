@@ -2,18 +2,18 @@
 // SCROLL REVEAL ANIMATION (Smooth Fade-up)
 // =========================
 const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.15 
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15 
 };
 
 const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-            observer.unobserve(entry.target); 
-        }
-    });
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target); 
+        }
+    });
 }, observerOptions);
 
 const hiddenElements = document.querySelectorAll('.hidden');
@@ -27,14 +27,14 @@ const nameElement = document.querySelector(".typing-name");
 let nameIndex = 0;
 
 function typeName(){
-    if(nameIndex < nameText.length){
-        nameElement.innerHTML += nameText.charAt(nameIndex);
-        nameIndex++;
-        setTimeout(typeName,100);
-    }
+    if(nameIndex < nameText.length){
+        nameElement.innerHTML += nameText.charAt(nameIndex);
+        nameIndex++;
+        setTimeout(typeName,100);
+    }
 }
 window.addEventListener("load",()=>{
-    typeName();
+    typeName();
 });
 
 // =========================
@@ -46,28 +46,28 @@ let roleIndex = 0;
 let deleting = false;
 
 function roleTyping(){
-    if(!deleting){
-        roleElement.innerHTML = roleText.substring(0,roleIndex);
-        roleIndex++;
-        if(roleIndex > roleText.length){
-            deleting = true;
-            setTimeout(roleTyping,1500);
-            return;
-        }
-    }
-    else{
-        roleElement.innerHTML = roleText.substring(0,roleIndex);
-        roleIndex--;
-        if(roleIndex < 0){
-            deleting=false;
-            roleIndex=0;
-        }
-    }
-    let speed = deleting ? 40 : 80;
-    setTimeout(roleTyping,speed);
+    if(!deleting){
+        roleElement.innerHTML = roleText.substring(0,roleIndex);
+        roleIndex++;
+        if(roleIndex > roleText.length){
+            deleting = true;
+            setTimeout(roleTyping,1500);
+            return;
+        }
+    }
+    else{
+        roleElement.innerHTML = roleText.substring(0,roleIndex);
+        roleIndex--;
+        if(roleIndex < 0){
+            deleting=false;
+            roleIndex=0;
+        }
+    }
+    let speed = deleting ? 40 : 80;
+    setTimeout(roleTyping,speed);
 }
 window.addEventListener("load",()=>{
-    setTimeout(roleTyping,2000);
+    setTimeout(roleTyping,2000);
 });
 
 // =========================
@@ -77,77 +77,77 @@ const menu = document.querySelector(".menu");
 const navLinks = document.querySelector(".nav-links");
 
 menu.addEventListener("click",()=>{
-    navLinks.classList.toggle("active");
+    navLinks.classList.toggle("active");
 });
 document.querySelectorAll(".nav-links a").forEach(link=>{
-    link.addEventListener("click",()=>{
-        navLinks.classList.remove("active");
-    });
+    link.addEventListener("click",()=>{
+        navLinks.classList.remove("active");
+    });
 });
 
 // =========================
 // PREMIUM CURSOR (Original Logic)
 // =========================
 if (window.matchMedia("(pointer: fine)").matches) {
-    const cursorDot = document.querySelector(".cursor-dot");
-    const cursorOutline = document.querySelector(".cursor-outline");
+    const cursorDot = document.querySelector(".cursor-dot");
+    const cursorOutline = document.querySelector(".cursor-outline");
 
-    window.addEventListener("mousemove", (e)=>{
-        cursorDot.style.left = e.clientX + "px";
-        cursorDot.style.top = e.clientY + "px";
+    window.addEventListener("mousemove", (e)=>{
+        cursorDot.style.left = e.clientX + "px";
+        cursorDot.style.top = e.clientY + "px";
 
-        cursorOutline.animate(
-            [
-                { left: cursorOutline.style.left, top: cursorOutline.style.top },
-                { left: e.clientX + "px", top: e.clientY + "px" }
-            ],
-            { duration: 400, fill:"forwards" }
-        );
-    });
+        cursorOutline.animate(
+            [
+                { left: cursorOutline.style.left, top: cursorOutline.style.top },
+                { left: e.clientX + "px", top: e.clientY + "px" }
+            ],
+            { duration: 400, fill:"forwards" }
+        );
+    });
 
-    const hoverElements = document.querySelectorAll("a, button, .skill-item, .project-card, .contact-box, .experience-box, .certificate-card, .soft-skill-item");
-    hoverElements.forEach((item)=>{
-        item.addEventListener("mouseenter",()=>{ cursorOutline.classList.add("cursor-hover"); });
-        item.addEventListener("mouseleave",()=>{ cursorOutline.classList.remove("cursor-hover"); });
-    });
+    const hoverElements = document.querySelectorAll("a, button, .skill-item, .project-card, .contact-box, .experience-box, .certificate-card, .soft-skill-item");
+    hoverElements.forEach((item)=>{
+        item.addEventListener("mouseenter",()=>{ cursorOutline.classList.add("cursor-hover"); });
+        item.addEventListener("mouseleave",()=>{ cursorOutline.classList.remove("cursor-hover"); });
+    });
 }
 
 
 async function getGithubContributions() {
 
-    const username = "Amirhossainlimon";
+    const username = "Amirhossainlimon";
 
-    try {
+    try {
 
-        const response = await fetch(
-            `https://github-contributions-api.jogruber.de/v4/${username}`
-        );
+        const response = await fetch(
+            `https://github-contributions-api.jogruber.de/v4/${username}`
+        );
 
-        const data = await response.json();
-
-
-        let total = 0;
+        const data = await response.json();
 
 
-        data.contributions.forEach(day => {
-
-            total += day.count;
-
-        });
+        let total = 0;
 
 
-        document.getElementById("contribution-count").innerText =
-        `${total} Contributions in the last year`;
+        data.contributions.forEach(day => {
+
+            total += day.count;
+
+        });
 
 
-    } catch(error) {
+        document.getElementById("contribution-count").innerText =
+        `${total} Contributions in the last year`;
 
-        console.log(error);
 
-        document.getElementById("contribution-count").innerText =
-        "GitHub Contributions";
+    } catch(error) {
 
-    }
+        console.log(error);
+
+        document.getElementById("contribution-count").innerText =
+        "GitHub Contributions";
+
+    }
 
 }
 
