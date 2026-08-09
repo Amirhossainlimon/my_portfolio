@@ -86,70 +86,82 @@ document.querySelectorAll(".nav-links a").forEach(link=>{
 });
 
 // =========================
-// PREMIUM CURSOR (Original Logic)
+// PREMIUM SMOOTH CURSOR
 // =========================
-if (window.matchMedia("(pointer: fine)").matches) {
-    const cursorDot = document.querySelector(".cursor-dot");
-    const cursorOutline = document.querySelector(".cursor-outline");
+const cursorDot = document.querySelector(".cursor-dot");
+const cursorOutline = document.querySelector(".cursor-outline");
 
-    window.addEventListener("mousemove", (e)=>{
-        cursorDot.style.left = e.clientX + "px";
-        cursorDot.style.top = e.clientY + "px";
+let mouseX = 0;
+let mouseY = 0;
+let outlineX = 0;
+let outlineY = 0;
 
-        cursorOutline.animate(
-            [
-                { left: cursorOutline.style.left, top: cursorOutline.style.top },
-                { left: e.clientX + "px", top: e.clientY + "px" }
-            ],
-            { duration: 400, fill:"forwards" }
-        );
-    });
+window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    if (cursorDot) {
+        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+    }
+});
 
-    const hoverElements = document.querySelectorAll("a, button, .skill-item, .project-card, .contact-box, .experience-box, .certificate-card, .soft-skill-item");
-    hoverElements.forEach((item)=>{
-        item.addEventListener("mouseenter",()=>{ cursorOutline.classList.add("cursor-hover"); });
-        item.addEventListener("mouseleave",()=>{ cursorOutline.classList.remove("cursor-hover"); });
-    });
+function animateCursor() {
+    let distX = mouseX - outlineX;
+    let distY = mouseY - outlineY;
+
+    outlineX += distX * 0.2;
+    outlineY += distY * 0.2;
+
+    if (cursorOutline) {
+        cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px)`;
+    }
+
+    requestAnimationFrame(animateCursor);
 }
 
+animateCursor();
 
+const interactiveElements = document.querySelectorAll("a, button, .contact-box, input, textarea, .skill-item, .project-card, .experience-box, .certificate-card, .soft-skill-item");
+
+interactiveElements.forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+        document.body.classList.add("cursor-hover");
+    });
+    el.addEventListener("mouseleave", () => {
+        document.body.classList.remove("cursor-hover");
+    });
+});
+
+// =========================
+// GITHUB CONTRIBUTIONS API
+// =========================
 async function getGithubContributions() {
-
     const username = "Amirhossainlimon";
 
     try {
-
         const response = await fetch(
             `https://github-contributions-api.jogruber.de/v4/${username}`
         );
 
         const data = await response.json();
-
-
         let total = 0;
 
-
         data.contributions.forEach(day => {
-
             total += day.count;
-
         });
 
-
-        document.getElementById("contribution-count").innerText =
-        `${total} Contributions in the last year`;
-
+        const contributionElement = document.getElementById("contribution-count");
+        if (contributionElement) {
+            contributionElement.innerText = `${total} Contributions in the last year`;
+        }
 
     } catch(error) {
-
         console.log(error);
-
-        document.getElementById("contribution-count").innerText =
-        "GitHub Contributions";
-
+        const contributionElement = document.getElementById("contribution-count");
+        if (contributionElement) {
+            contributionElement.innerText = "GitHub Contributions";
+        }
     }
-
 }
-
 
 getGithubContributions();
