@@ -176,33 +176,51 @@ GITHUB & CONTACT
 .github-graph img{ max-width:100%; }
 .github-btn{ display:inline-block; margin-top:25px; padding:12px 25px; background:var(--accent); color:#000; border-radius:25px; font-weight:600; }
 
-.contact-container{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:25px; }
-.contact-box{ background:#111; padding:30px; border-radius:20px; text-align:center; transition:.3s; border:1px solid rgba(255,255,255,.1); }
-.contact-box i{ font-size:35px; color:var(--accent); }
-.contact-box h3{ margin:15px 0; }
-.contact-box p{ color:#aaa; }
-.contact-box:hover{ transform:translateY(-8px); border-color:var(--accent);}
-
 footer{ padding:30px; text-align:center; background:#050505; color:#aaa; }
 
 /* =========================
-PREMIUM CUSTOM CURSOR (Original)
+PREMIUM CUSTOM CURSOR (Updated & Smooth)
 ========================= */
-.cursor-dot{
-    width:12px; height:12px; background:var(--accent); border-radius:50%; position:fixed;
-    left:0; top:0; transform:translate(-50%,-50%); pointer-events:none; z-index:99999;
-    box-shadow: 0 0 10px var(--accent), 0 0 25px var(--accent), 0 0 45px var(--accent);
-    animation:pulseCursor 1.5s infinite;
+.cursor-dot,
+.cursor-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 99999;
+    transition: opacity 0.3s ease-in-out;
 }
-.cursor-outline{
-    width:55px; height:55px; border-radius:50%; position:fixed; left:0; top:0; transform:translate(-50%,-50%);
-    pointer-events:none; z-index:99998; border:2px solid var(--accent-glow);
-    background: radial-gradient(circle, var(--accent-light), transparent 70%); backdrop-filter:blur(5px);
-    box-shadow: 0 0 20px var(--accent-glow), inset 0 0 15px var(--accent-light);
-    transition: width .3s ease, height .3s ease, border .3s ease;
+
+.cursor-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
 }
-@keyframes pulseCursor{ 0%{ transform:translate(-50%,-50%) scale(1); } 50%{ transform:translate(-50%,-50%) scale(1.4); } 100%{ transform:translate(-50%,-50%) scale(1); } }
-.cursor-hover{ width:80px; height:80px; border-color:var(--accent); box-shadow: 0 0 30px var(--accent), inset 0 0 20px var(--accent-glow); }
+
+.cursor-outline {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--accent-glow);
+    background: radial-gradient(circle, var(--accent-light), transparent 70%);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+body.cursor-hover .cursor-outline {
+    width: 70px;
+    height: 70px;
+    background: var(--accent-light);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent-glow);
+}
+
+body.cursor-hover .cursor-dot {
+    transform: translate(-50%, -50%) scale(0.6);
+}
 
 /* =========================
 RESPONSIVE
@@ -231,138 +249,73 @@ RESPONSIVE
 /* =========================
    ENTREPRENEURSHIP SECTION
 ========================= */
-
-
 .entrepreneurship-section{
-
     padding:80px 10%;
-
 }
-
-
 
 .entrepreneur-card{
-
     width:70%;
-
     margin:auto;
-
     display:flex;
-
     align-items:center;
-
     gap:30px;
-
     padding:25px;
-
     background:rgba(255,255,255,0.05);
-
     border:1px solid rgba(255,255,255,0.1);
-
     border-radius:20px;
-
     transition:0.4s;
-
 }
-
-
 
 .entrepreneur-card:hover{
-
     transform:translateY(-8px);
-
     box-shadow:0 0 25px var(--accent);
-
 }
-
-
 
 .entrepreneur-image img{
-
     width:120px;
-
     height:120px;
-
     border-radius:20px;
-
     object-fit:cover;
-
     border:2px solid var(--accent);
-
 }
-
-
 
 .role-badge{
-
     display:inline-block;
-
     padding:5px 14px;
-
     border-radius:20px;
-
     font-size:12px;
-
     color:var(--accent);
-
     background:rgba(0,255,136,0.1);
-
 }
-
-
 
 .entrepreneur-details h3{
-
     font-size:26px;
-
     margin:10px 0;
-
 }
-
-
 
 .entrepreneur-details p{
-
     color:#ccc;
-
     font-size:14px;
-
     line-height:1.6;
-
 }
-
-
 
 .business-btn{
-
     display:inline-flex;
-
     align-items:center;
-
     gap:8px;
-
 }
 
-
-
 @media(max-width:768px){
-
     .entrepreneur-card{
-
         width:90%;
-
         flex-direction:column;
-
         text-align:center;
-
     }
-
 }
 
 /* =========================
 MODERN CONTACT SECTION
-========================= --> */
-
+========================= */
 #contact {
     padding: 60px 20px;
 }
@@ -400,6 +353,8 @@ MODERN CONTACT SECTION
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
 }
 
 .contact-box a {
@@ -409,12 +364,6 @@ MODERN CONTACT SECTION
     color: white;
     text-decoration: none;
     width: 100%;
-}
-
-/* Makes non-link boxes (like phone) align correctly */
-.contact-box {
-    display: flex;
-    align-items: center;
 }
 
 .contact-box .icon-box {
@@ -459,7 +408,6 @@ MODERN CONTACT SECTION
 .contact-box:hover .icon-box i {
     color: #fff;
 }
-
 
 /* RIGHT FORM */
 .contact-form {
@@ -524,7 +472,6 @@ MODERN CONTACT SECTION
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(0, 247, 255, 0.4);
 }
-
 
 @media (max-width: 850px) {
     .contact-wrapper {
