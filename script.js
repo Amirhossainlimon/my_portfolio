@@ -1,556 +1,155 @@
-/\* =========================
-DYNAMIC THEME VARIABLES
-\========================= \*/
-\:root, .theme-green {
-\--accent: #00ff88;
-\--accent-sec: #00d4ff;
-\--accent-glow: rgba(0, 255, 136, 0.3);
-\--accent-light: rgba(0, 255, 136, 0.1);
+// =========================
+// SCROLL REVEAL ANIMATION (Smooth Fade-up)
+// =========================
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15 
+};
+
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target); 
+        }
+    });
+}, observerOptions);
+
+const hiddenElements = document.querySelectorAll('.hidden');
+hiddenElements.forEach((el) => observer.observe(el));
+
+// =========================
+// ONE TIME NAME TYPING (Original)
+// =========================
+const nameText = "Hi, I'm Amir Hossain Limon";
+const nameElement = document.querySelector(".typing-name");
+let nameIndex = 0;
+
+function typeName(){
+    if(nameIndex < nameText.length){
+        nameElement.innerHTML += nameText.charAt(nameIndex);
+        nameIndex++;
+        setTimeout(typeName,100);
+    }
 }
-.theme-blue {
-\--accent: #00d4ff;
-\--accent-sec: #a855f7;
-\--accent-glow: rgba(0, 212, 255, 0.3);
-\--accent-light: rgba(0, 212, 255, 0.1);
+window.addEventListener("load",()=>{
+    typeName();
+});
+
+// =========================
+// ROLE LOOP TYPING (Original)
+// =========================
+const roleText = "Flutter Developer | Cross-Platform Mobile App Development";
+const roleElement = document.querySelector(".role-text");
+let roleIndex = 0;
+let deleting = false;
+
+function roleTyping(){
+    if(!deleting){
+        roleElement.innerHTML = roleText.substring(0,roleIndex);
+        roleIndex++;
+        if(roleIndex > roleText.length){
+            deleting = true;
+            setTimeout(roleTyping,1500);
+            return;
+        }
+    }
+    else{
+        roleElement.innerHTML = roleText.substring(0,roleIndex);
+        roleIndex--;
+        if(roleIndex < 0){
+            deleting=false;
+            roleIndex=0;
+        }
+    }
+    let speed = deleting ? 40 : 80;
+    setTimeout(roleTyping,speed);
 }
-.theme-purple {
-\--accent: #a855f7;
-\--accent-sec: #ff5c22;
-\--accent-glow: rgba(168, 85, 247, 0.3);
-\--accent-light: rgba(168, 85, 247, 0.1);
-}
-.theme-orange {
-\--accent: #ff9800;
-\--accent-sec: #ffeb3b;
-\--accent-glow: rgba(255, 152, 0, 0.3);
-\--accent-light: rgba(255, 152, 0, 0.1);
-}
+window.addEventListener("load",()=>{
+    setTimeout(roleTyping,2000);
+});
 
-/\* =========================
-GLOBAL & SCROLL ANIMATION CLASSES
-\========================= \*/
-\*{ margin:0; padding:0; box-sizing\:border-box; font-family:'Poppins',sans-serif; }
-html{ scroll-behavior\:smooth; }
-body{ background:#080808; color:#fff; overflow-x\:hidden; cursor\:none; }
-a{ text-decoration\:none; color\:inherit; }
-section{ padding:90px 8%; }
+// =========================
+// MOBILE NAVBAR (Original)
+// =========================
+const menu = document.querySelector(".menu");
+const navLinks = document.querySelector(".nav-links");
 
-/\* Scroll Reveal Classes (Fade In Up) \*/
-.hidden { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-.show { opacity: 1; transform: translateY(0); }
-.delay-1 { transition-delay: 150ms; }
-.delay-2 { transition-delay: 300ms; }
-.delay-3 { transition-delay: 450ms; }
+menu.addEventListener("click",()=>{
+    navLinks.classList.toggle("active");
+});
+document.querySelectorAll(".nav-links a").forEach(link=>{
+    link.addEventListener("click",()=>{
+        navLinks.classList.remove("active");
+    });
+});
 
-/\* =========================
-NAVBAR
-\========================= \*/
-header{ position\:fixed; top:0; width:100%; z-index:1000; }
-.navbar{ display\:flex; justify-content\:space-between; align-items\:center; padding:18px 8%; background\:rgba(10,10,10,.75); backdrop-filter\:blur(15px); border-bottom:1px solid rgba(255,255,255,.08); }
-.logo img{ width:55px; height:55px; border-radius:50%; object-fit\:cover; border:2px solid var(--accent); transition:.4s; }
-.logo img\:hover{ transform\:rotate(360deg); }
-.nav-links{ display\:flex; gap:30px; list-style\:none; }
-.nav-links a{ font-size:15px; font-weight:500; color:#ddd; transition:.3s; }
-.nav-links a\:hover, .nav-links .active{ color\:var(--accent); }
-.menu{ display\:none; font-size:25px; cursor\:pointer; }
+// =========================
+// PREMIUM CURSOR (Original Logic)
+// =========================
+if (window.matchMedia("(pointer: fine)").matches) {
+    const cursorDot = document.querySelector(".cursor-dot");
+    const cursorOutline = document.querySelector(".cursor-outline");
 
-/\* =========================
-HERO
-\========================= \*/
-.hero{ min-height:100vh; display\:flex; align-items\:center; padding-top:120px; }
-.hero-container{ display\:flex; align-items\:center; justify-content\:space-between; gap:50px; width:100%;}
-.hero-content{ max-width:650px; }
-.welcome{ display\:inline-flex; align-items\:center; gap:10px; padding:10px 18px; border-radius:30px; background\:var(--accent-light); border:1px solid var(--accent-glow); color\:var(--accent); font-size:14px; margin-bottom:25px; }
-.welcome span{ width:10px; height:10px; background\:var(--accent); border-radius:50%; animation\:pulse 1s infinite; }
-@keyframes pulse{ 50%{ opacity:.3; } }
+    window.addEventListener("mousemove", (e)=>{
+        cursorDot.style.left = e.clientX + "px";
+        cursorDot.style.top = e.clientY + "px";
 
-.typing-name{ font-size:55px; font-weight:800; line-height:1.2; }
-.typing-name::after, .role-text::after{ content:"|"; color\:var(--accent); animation\:blink .7s infinite; }
-@keyframes blink{ 50%{ opacity:0; } }
+        cursorOutline.animate(
+            [
+                { left: cursorOutline.style.left, top: cursorOutline.style.top },
+                { left: e.clientX + "px", top: e.clientY + "px" }
+            ],
+            { duration: 400, fill:"forwards" }
+        );
+    });
 
-.role-text{ font-size:30px; margin:20px 0; font-weight:700; background\:linear-gradient(90deg, var(--accent), var(--accent-sec)); -webkit-background-clip\:text; color\:transparent; }
-.hero-description{ color:#aaa; line-height:1.8; font-size:16px; }
-
-/\* BUTTONS \*/
-.hero-buttons{ display\:flex; gap:20px; margin-top:35px; flex-wrap\:wrap;}
-.btn{ padding:14px 30px; border-radius:30px; font-weight:600; transition:.3s; }
-.primary{ background\:var(--accent); color:#000; }
-.secondary{ border:1px solid var(--accent); color\:var(--accent); }
-.btn\:hover{ transform\:translateY(-5px); }
-
-/\* SOCIAL \*/
-.social-mini{ display\:flex; gap:20px; margin-top:35px; }
-.social-mini a{ width:45px; height:45px; border-radius:50%; display\:flex; align-items\:center; justify-content\:center; background:#151515; font-size:20px; transition:.3s; }
-.social-mini a\:hover{ background\:var(--accent); color:#000; transform\:translateY(-5px); }
-
-/\* PROFILE IMAGE \*/
-.hero-image{ position\:relative; }
-.profile-card{ width:330px; height:330px; border-radius:50%; overflow\:hidden; border:4px solid var(--accent); position\:relative; z-index:2; }
-.profile-card img{ width:100%; height:100%; object-fit\:cover; }
-.glow-ring{ position\:absolute; width:370px; height:370px; border-radius:50%; background\:linear-gradient(45deg, var(--accent), transparent); filter\:blur(50px); top:-20px; left:-20px;}
-
-/\* =========================
-SECTION TITLE & GLASS BOX
-\========================= \*/
-.section-title{ text-align\:center; margin-bottom:50px; }
-.section-title h2{ font-size:38px; margin-top:10px; }
-.section-title span{ color\:var(--accent); font-size:20px; }
-.glass-box{ background\:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); padding:35px; border-radius:20px; backdrop-filter\:blur(15px); color:#ccc; line-height:1.8; }
-
-/\* =========================
-EDUCATION TIMELINE
-\========================= \*/
-.timeline{ position\:relative; max-width:800px; margin\:auto; }
-.timeline-item{ display\:flex; gap:25px; margin-bottom:35px; }
-.timeline-icon{ width:55px; height:55px; border-radius:50%; background\:var(--accent); color:#000; display\:flex; align-items\:center; justify-content\:center; font-size:20px; }
-.timeline-content{ background:#111; padding:25px; border-radius:15px; flex:1; }
-.timeline-content h3{ color\:var(--accent); }
-.timeline-content p{ color:#aaa; margin-top:10px; }
-
-/\* =========================
-SKILLS LOGO SPIN EFFECT (Original Style)
-\========================= \*/
-.skills-logo-container{ display\:grid; grid-template-columns\:repeat(auto-fit,minmax(130px,1fr)); gap:25px; }
-.skill-item{
-width:120px; height:120px; background\:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
-border-radius:20px; display\:flex; flex-direction\:column; justify-content\:center; align-items\:center;
-backdrop-filter\:blur(10px); cursor\:pointer; transition:0.5s ease; margin: 0 auto;
-}
-.skill-item i{ font-size:45px; color\:var(--accent); transition:0.6s ease; animation\:spinLogo 5s linear infinite; }
-@keyframes spinLogo{ 100%{ transform\:rotateY(360deg); } }
-.skill-item p{ margin-top:10px; color\:white; font-weight:600; }
-.skill-item\:hover i{ transform\:rotate(360deg); animation: none; }
-.skill-item\:hover{ transform\:translateY(-10px) scale(1.08); box-shadow:0 0 25px var(--accent); }
-.devicon-github-original{ color\:white !important; }
-
-/\* =========================
-SOFT SKILLS & EXPERIENCE
-\========================= \*/
-.soft-skills-container{ display\:grid; grid-template-columns\:repeat(auto-fit,minmax(250px,1fr)); gap:25px; }
-.soft-skill-item{ background:#111; padding:30px; border-radius:20px; border:1px solid rgba(255,255,255,.08); transition:.4s; }
-.soft-skill-item i{ font-size:35px; color\:var(--accent); }
-.soft-skill-item h3{ margin:15px 0; }
-.soft-skill-item p{ color:#aaa; line-height:1.6; }
-.soft-skill-item\:hover{ transform\:translateY(-10px); border-color\:var(--accent); }
-
-.experience-container{ display\:grid; grid-template-columns\:repeat(auto-fit,minmax(280px,1fr)); gap:25px; }
-.experience-box{ background\:rgba(255,255,255,.05); padding:30px; border-radius:20px; border:1px solid rgba(255,255,255,.1); transition:.4s; }
-.exp-icon{ width:60px; height:60px; border-radius:50%; background\:var(--accent); color:#000; display\:flex; align-items\:center; justify-content\:center; font-size:25px; margin-bottom:20px; }
-.experience-box h3{ color\:var(--accent); }
-.experience-box p{ color:#aaa; line-height:1.7; margin:15px 0; }
-.exp-tags{ display\:flex; flex-wrap\:wrap; gap:10px; }
-.exp-tags span, .tech-stack span{ background:#151515; padding:7px 15px; border-radius:20px; font-size:13px; color\:var(--accent); }
-.exp-tags a{ background\:var(--accent); color:#000; padding:7px 15px; border-radius:20px; font-size:13px; }
-.experience-box\:hover{ transform\:translateY(-10px); border-color\:var(--accent); }
-
-/\* =========================
-CERTIFICATES
-\========================= \*/
-.certificate-container{ display\:grid; grid-template-columns\:repeat(auto-fit,minmax(250px,1fr)); gap:25px; }
-.certificate-card{ background:#111; padding:30px; border-radius:20px; text-align\:center; border:1px solid rgba(255,255,255,.08); transition:.4s; }
-.certificate-logo{ font-size:40px; color\:var(--accent); margin-bottom:20px; }
-.certificate-card p{ color:#aaa; margin:15px 0; }
-.certificate-card a{ display\:inline-block; padding:10px 20px; background\:var(--accent); color:#000; border-radius:20px; font-weight:600; }
-.certificate-card\:hover{ transform\:translateY(-10px); border-color\:var(--accent);}
-
-/\* =========================
-PROJECTS
-\========================= \*/
-.projects-container{ display\:grid; grid-template-columns\:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
-.project-card{ background:#111; border-radius:20px; overflow\:hidden; border:1px solid rgba(255,255,255,.1); transition:.4s; }
-.project-card\:hover{ transform\:translateY(-12px); border-color\:var(--accent);}
-.project-image img{ width:100%; height:220px; object-fit\:cover; }
-.project-info{ padding:25px; }
-.project-info h3{ color\:var(--accent); }
-.project-info p{ color:#aaa; margin:15px 0; line-height:1.6; }
-.tech-stack{ display\:flex; gap:10px; flex-wrap\:wrap; }
-.project-buttons{ display\:flex; gap:15px; margin-top:20px; flex-wrap\:wrap;}
-.project-buttons a{ padding:10px 15px; border-radius:20px; background\:var(--accent); color:#000; font-size:13px; font-weight:600; }
-
-/\* =========================
-GITHUB & CONTACT
-\========================= \*/
-.github-card{ background:#111; padding:40px; border-radius:25px; text-align\:center; border:1px solid rgba(255,255,255,.1); }
-.github-card i{ font-size:60px; color\:var(--accent); }
-.github-card p{ color:#aaa; margin:20px; }
-.github-graph img{ max-width:100%; }
-.github-btn{ display\:inline-block; margin-top:25px; padding:12px 25px; background\:var(--accent); color:#000; border-radius:25px; font-weight:600; }
-
-.contact-container{ display\:grid; grid-template-columns\:repeat(auto-fit,minmax(220px,1fr)); gap:25px; }
-.contact-box{ background:#111; padding:30px; border-radius:20px; text-align\:center; transition:.3s; border:1px solid rgba(255,255,255,.1); }
-.contact-box i{ font-size:35px; color\:var(--accent); }
-.contact-box h3{ margin:15px 0; }
-.contact-box p{ color:#aaa; }
-.contact-box\:hover{ transform\:translateY(-8px); border-color\:var(--accent);}
-
-footer{ padding:30px; text-align\:center; background:#050505; color:#aaa; }
-
-/\* =========================
-PREMIUM CUSTOM CURSOR (Original)
-\========================= \*/
-.cursor-dot{
-width:12px; height:12px; background\:var(--accent); border-radius:50%; position\:fixed;
-left:0; top:0; transform\:translate(-50%,-50%); pointer-events\:none; z-index:99999;
-box-shadow: 0 0 10px var(--accent), 0 0 25px var(--accent), 0 0 45px var(--accent);
-animation\:pulseCursor 1.5s infinite;
-}
-.cursor-outline{
-width:55px; height:55px; border-radius:50%; position\:fixed; left:0; top:0; transform\:translate(-50%,-50%);
-pointer-events\:none; z-index:99998; border:2px solid var(--accent-glow);
-background: radial-gradient(circle, var(--accent-light), transparent 70%); backdrop-filter\:blur(5px);
-box-shadow: 0 0 20px var(--accent-glow), inset 0 0 15px var(--accent-light);
-transition: width .3s ease, height .3s ease, border .3s ease;
-}
-@keyframes pulseCursor{ 0%{ transform\:translate(-50%,-50%) scale(1); } 50%{ transform\:translate(-50%,-50%) scale(1.4); } 100%{ transform\:translate(-50%,-50%) scale(1); } }
-.cursor-hover{ width:80px; height:80px; border-color\:var(--accent); box-shadow: 0 0 30px var(--accent), inset 0 0 20px var(--accent-glow); }
-
-/\* =========================
-RESPONSIVE
-\========================= \*/
-@media(max-width:900px){
-.nav-links{ position\:absolute; top:80px; left:-100%; width:100%; background:#111; flex-direction\:column; text-align\:center; padding:30px; transition:.4s; }
-.nav-links.active{ left:0; }
-.menu{ display\:block; }
-.hero-container{ flex-direction\:column-reverse; text-align\:center; }
-.typing-name{ font-size:40px; }
-.role-text{ font-size:22px; }
-.profile-card{ width:260px; height:260px; margin:0 auto; }
-.glow-ring{ left: 0; width: 100%; }
-.hero-buttons, .social-mini{ justify-content\:center; }
-section{ padding:70px 5%; }
-}
-@media(max-width:500px){
-.section-title h2{ font-size:30px; }
-.project-buttons{ flex-direction\:column; }
-.timeline-item{ flex-direction\:column; }
-body{ cursor\:auto; }
-.cursor-dot, .cursor-outline{ display\:none; }
+    const hoverElements = document.querySelectorAll("a, button, .skill-item, .project-card, .contact-box, .experience-box, .certificate-card, .soft-skill-item");
+    hoverElements.forEach((item)=>{
+        item.addEventListener("mouseenter",()=>{ cursorOutline.classList.add("cursor-hover"); });
+        item.addEventListener("mouseleave",()=>{ cursorOutline.classList.remove("cursor-hover"); });
+    });
 }
 
-/\* =========================
-ENTREPRENEURSHIP SECTION
-\========================= \*/
 
-.entrepreneurship-section{
+async function getGithubContributions() {
 
-```
-padding:80px 10%;
-```
+    const username = "Amirhossainlimon";
+
+    try {
+
+        const response = await fetch(
+            `https://github-contributions-api.jogruber.de/v4/${username}`
+        );
+
+        const data = await response.json();
+
+
+        let total = 0;
+
+
+        data.contributions.forEach(day => {
+
+            total += day.count;
+
+        });
+
+
+        document.getElementById("contribution-count").innerText =
+        `${total} Contributions in the last year`;
+
+
+    } catch(error) {
+
+        console.log(error);
+
+        document.getElementById("contribution-count").innerText =
+        "GitHub Contributions";
+
+    }
 
 }
 
 
-
-.entrepreneur-card{
-
-```
-width:70%;
-
-margin:auto;
-
-display:flex;
-
-align-items:center;
-
-gap:30px;
-
-padding:25px;
-
-background:rgba(255,255,255,0.05);
-
-border:1px solid rgba(255,255,255,0.1);
-
-border-radius:20px;
-
-transition:0.4s;
-```
-
-}
-
-
-
-.entrepreneur-card\:hover{
-
-```
-transform:translateY(-8px);
-
-box-shadow:0 0 25px var(--accent);
-```
-
-}
-
-
-
-.entrepreneur-image img{
-
-```
-width:120px;
-
-height:120px;
-
-border-radius:20px;
-
-object-fit:cover;
-
-border:2px solid var(--accent);
-```
-
-}
-
-
-
-.role-badge{
-
-```
-display:inline-block;
-
-padding:5px 14px;
-
-border-radius:20px;
-
-font-size:12px;
-
-color:var(--accent);
-
-background:rgba(0,255,136,0.1);
-```
-
-}
-
-
-
-.entrepreneur-details h3{
-
-```
-font-size:26px;
-
-margin:10px 0;
-```
-
-}
-
-
-
-.entrepreneur-details p{
-
-```
-color:#ccc;
-
-font-size:14px;
-
-line-height:1.6;
-```
-
-}
-
-
-
-.business-btn{
-
-```
-display:inline-flex;
-
-align-items:center;
-
-gap:8px;
-```
-
-}
-
-
-
-@media(max-width:768px){
-
-```
-.entrepreneur-card{
-
-    width:90%;
-
-    flex-direction:column;
-
-    text-align:center;
-
-}
-```
-
-}
-
-/\* =========================
-MODERN CONTACT SECTION
-\========================= --> \*/
-
-\#contact {
-padding: 60px 20px;
-}
-
-.section-title h2 {
-text-align: center;
-font-size: 38px;
-margin-bottom: 40px;
-background: linear-gradient(90deg, #00f7ff, #8a2be2);
--webkit-background-clip: text;
-color: transparent;
-}
-
-.contact-wrapper {
-display: flex;
-justify-content: center;
-align-items: stretch;
-gap: 40px;
-max-width: 1100px;
-margin: auto;
-}
-
-/\* LEFT CARDS CONTAINER \*/
-.contact-container {
-display: flex;
-flex-direction: column;
-gap: 15px;
-flex: 1;
-}
-
-.contact-box {
-padding: 18px 22px;
-background: rgba(255, 255, 255, 0.05);
-backdrop-filter: blur(12px);
-border-radius: 20px;
-border: 1px solid rgba(255, 255, 255, 0.1);
-transition: all 0.4s ease;
-}
-
-.contact-box a {
-display: flex;
-align-items: center;
-gap: 18px;
-color: white;
-text-decoration: none;
-width: 100%;
-}
-
-/\* Makes non-link boxes (like phone) align correctly \*/
-.contact-box {
-display: flex;
-align-items: center;
-}
-
-.contact-box .icon-box {
-width: 50px;
-height: 50px;
-background: rgba(0, 247, 255, 0.1);
-border-radius: 14px;
-display: flex;
-align-items: center;
-justify-content: center;
-transition: 0.3s ease;
-}
-
-.contact-box i {
-font-size: 22px;
-color: #00f7ff;
-}
-
-.contact-box h3 {
-font-size: 17px;
-margin: 0;
-color: #fff;
-font-weight: 600;
-}
-
-.contact-box p {
-margin: 3px 0 0;
-color: #aaa;
-font-size: 13px;
-}
-
-.contact-box\:hover {
-transform: translateX(8px);
-border-color: rgba(0, 247, 255, 0.4);
-box-shadow: 0 10px 30px rgba(0, 247, 255, 0.15);
-}
-
-.contact-box\:hover .icon-box {
-background: linear-gradient(135deg, #00f7ff, #8a2be2);
-}
-
-.contact-box\:hover .icon-box i {
-color: #fff;
-}
-
-/\* RIGHT FORM \*/
-.contact-form {
-flex: 1.2;
-padding: 40px;
-background: rgba(255, 255, 255, 0.05);
-backdrop-filter: blur(15px);
-border-radius: 25px;
-border: 1px solid rgba(255, 255, 255, 0.1);
-box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-}
-
-.contact-form h2 {
-font-size: 30px;
-margin-bottom: 10px;
-background: linear-gradient(90deg, #00f7ff, #8a2be2);
--webkit-background-clip: text;
-color: transparent;
-}
-
-.contact-form p {
-color: #aaa;
-margin-bottom: 25px;
-font-size: 14px;
-}
-
-.contact-form input,
-.contact-form textarea {
-width: 100%;
-padding: 14px 18px;
-margin-bottom: 15px;
-background: rgba(255, 255, 255, 0.07);
-border: 1px solid rgba(255, 255, 255, 0.1);
-outline: none;
-border-radius: 12px;
-color: white;
-font-size: 14px;
-transition: 0.3s;
-}
-
-.contact-form input\:focus,
-.contact-form textarea\:focus {
-border-color: #00f7ff;
-background: rgba(255, 255, 255, 0.1);
-box-shadow: 0 0 15px rgba(0, 247, 255, 0.2);
-}
-
-.contact-form button {
-width: 100%;
-padding: 14px;
-border: none;
-border-radius: 30px;
-background: linear-gradient(90deg, #00f7ff, #8a2be2);
-color: white;
-font-size: 16px;
-font-weight: 600;
-cursor: pointer;
-transition: 0.3s;
-}
-
-.contact-form button\:hover {
-transform: translateY(-3px);
-box-shadow: 0 10px 25px rgba(0, 247, 255, 0.4);
-}
-
-@media (max-width: 850px) {
-.contact-wrapper {
-flex-direction: column-reverse;
-}
-
-```
-.contact-form, 
-.contact-container {
-    width: 100%;
-    flex: none;
-}
-```
-
-}
+getGithubContributions();
