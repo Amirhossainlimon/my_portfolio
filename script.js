@@ -153,3 +153,56 @@ async function getGithubContributions() {
 
 
 getGithubContributions();
+
+
+
+
+
+
+const splashScreen = document.getElementById('splash-screen');
+const progressBar = document.getElementById('progress-bar');
+const percentageText = document.getElementById('percentage');
+const commandText = document.getElementById('command-text');
+const statusText = document.getElementById('status-text');
+
+// Dynamic boot log messages
+const steps = [
+    { at: 15, text: "> Bypassing firewall security..." },
+    { at: 35, text: "> Allocating memory blocks..." },
+    { at: 60, text: "> Decrypting neural database..." },
+    { at: 85, text: "> Establishing secure mainframe link..." },
+    { at: 100, text: "> Access Granted. Welcome!" }
+];
+
+let progress = 0;
+
+const loadingInterval = setInterval(() => {
+    progress += Math.floor(Math.random() * 4) + 1;
+
+    if (progress >= 100) {
+        progress = 100;
+        clearInterval(loadingInterval);
+        statusText.innerText = "ONLINE";
+        statusText.style.color = "#27c93f";
+
+        // Fade out transition
+        setTimeout(() => {
+            splashScreen.style.opacity = '0';
+            splashScreen.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => splashScreen.remove(), 500);
+        }, 500);
+    }
+
+    // Update UI elements
+    progressBar.style.width = progress + '%';
+    percentageText.innerText = progress + '%';
+
+    // Change status text based on progress milestones
+    steps.forEach(step => {
+        if (progress >= step.at && commandText.innerText !== step.text) {
+            commandText.innerText = step.text;
+        }
+    });
+
+}, 35);
+
