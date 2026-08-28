@@ -1,10 +1,8 @@
-// =========================
-// SCROLL REVEAL ANIMATION (Smooth Fade-up)
-// =========================
+
 const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.15 
+ root: null,
+ rootMargin: '0px',
+ threshold: 0.15
 };
 
 const observer = new IntersectionObserver((entries, observer) => {
@@ -19,9 +17,7 @@ const observer = new IntersectionObserver((entries, observer) => {
 const hiddenElements = document.querySelectorAll('.hidden');
 hiddenElements.forEach((el) => observer.observe(el));
 
-// =========================
-// ONE TIME NAME TYPING (Original)
-// =========================
+
 const nameText = "Hi, I'm Amir Hossain Limon";
 const nameElement = document.querySelector(".typing-name");
 let nameIndex = 0;
@@ -37,9 +33,7 @@ window.addEventListener("load",()=>{
     typeName();
 });
 
-// =========================
-// ROLE LOOP TYPING (Original)
-// =========================
+
 const roleText = "Flutter Developer | Cross-Platform Mobile App Development";
 const roleElement = document.querySelector(".role-text");
 let roleIndex = 0;
@@ -70,9 +64,7 @@ window.addEventListener("load",()=>{
     setTimeout(roleTyping,2000);
 });
 
-// =========================
-// MOBILE NAVBAR (Original)
-// =========================
+
 const menu = document.querySelector(".menu");
 const navLinks = document.querySelector(".nav-links");
 
@@ -85,9 +77,7 @@ document.querySelectorAll(".nav-links a").forEach(link=>{
     });
 });
 
-// =========================
-// PREMIUM CURSOR (Original Logic)
-// =========================
+
 if (window.matchMedia("(pointer: fine)").matches) {
     const cursorDot = document.querySelector(".cursor-dot");
     const cursorOutline = document.querySelector(".cursor-outline");
@@ -133,7 +123,7 @@ async function getGithubContributions() {
 
             total += day.count;
 
-        });
+ });
 
 
         document.getElementById("contribution-count").innerText =
@@ -165,7 +155,7 @@ const percentageText = document.getElementById('percentage');
 const commandText = document.getElementById('command-text');
 const statusText = document.getElementById('status-text');
 
-// Dynamic boot log messages
+
 const steps = [
     { at: 15, text: "> Bypassing firewall security..." },
     { at: 35, text: "> Allocating memory blocks..." },
@@ -193,11 +183,11 @@ const loadingInterval = setInterval(() => {
         }, 500);
     }
 
-    // Update UI elements
+
     progressBar.style.width = progress + '%';
     percentageText.innerText = progress + '%';
 
-    // Change status text based on progress milestones
+  
     steps.forEach(step => {
         if (progress >= step.at && commandText.innerText !== step.text) {
             commandText.innerText = step.text;
@@ -205,4 +195,3 @@ const loadingInterval = setInterval(() => {
     });
 
 }, 35);
-
